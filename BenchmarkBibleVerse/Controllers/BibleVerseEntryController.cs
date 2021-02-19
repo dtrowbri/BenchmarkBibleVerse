@@ -18,9 +18,14 @@ namespace BenchmarkBibleVerse.Controllers
 
         public ActionResult CreateVerse(BibleVerseModel verse)
         {
-            BibleVerseService service = new BibleVerseService();
-            service.AddVerse(verse);
+            if(ModelState.IsValid){
+                BibleVerseService service = new BibleVerseService();
+                service.AddVerse(verse);
+                ModelState.Clear();
+            }
+            
             return View("CreateView");
+
         }
     }
 }
