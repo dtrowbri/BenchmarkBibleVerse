@@ -9,11 +9,10 @@ namespace BenchmarkBibleVerse.Service.Business
 {
     public class BibleVerseService
     {
-        public string AddVerse(BibleVerseModel bibleVerse)
+        public bool AddVerse(BibleVerseModel bibleVerse)
         {
             BibleVerseDAO dao = new BibleVerseDAO();
-            dao.AddVerse(bibleVerse);
-            return "Completed test";
+            return dao.AddVerse(bibleVerse);
         }
     }
 }
