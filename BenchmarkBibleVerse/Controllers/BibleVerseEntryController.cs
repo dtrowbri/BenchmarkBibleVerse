@@ -54,7 +54,7 @@ namespace BenchmarkBibleVerse.Controllers
 
         public ActionResult SearchVerse()
         {
-            logger.Info("User has called")
+            logger.Info("Action SearchVerse from BibleVerseEntry controller has been invoked.");
             return View("Action SearchVerse invoked from the BibleVerseEntry controller.");
         }
 
