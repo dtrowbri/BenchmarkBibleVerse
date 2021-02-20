@@ -78,11 +78,29 @@ namespace BenchmarkBibleVerse.Service.Data
 		                            exec sp_sqlexec @sqlcmd
                             End";
 
+        readonly string createSPGetVerse = @"if not exists(select * from sys.sysobjects where name = 'sp_getVerse' and type = 'p')
+                                                BEGIN
+	                                                DECLARE @SQLCMD NVARCHAR(MAX)
+	                                                SET @SQLCMD = 'create procedure sp_getVerse(
+		                                                @Testament char(3),
+		                                                @Book nvarchar(50),
+		                                                @Chapter int,
+		                                                @VerseNumber int
+	                                                )
+	                                                AS
+	                                                BEGIN
+		                                                SELECT [VERSE] FROM [DBO].[Verses] WHERE [Testament] = @Testament AND [Book] = @Book AND [Chapter] = @Chapter AND [VerseNumber] = @VerseNumber
+	                                                END'
+
+	                                                EXEC sp_sqlexec @SQLCMD
+                                                END";
 
         string bibleVerseConnectionString = ConfigurationManager.ConnectionStrings["BibleVerseDB"].ConnectionString;
         string masterConnectionString = ConfigurationManager.ConnectionStrings["Master"].ConnectionString;
 
         public string spAddVerse = "[DBO].[sp_addverse]";
+
+        public string spGetVerse = "[DBO].[sp_getVerse]";
     
         public bool AddVerse(BibleVerseModel bibleVerse)
         {
@@ -113,6 +131,46 @@ namespace BenchmarkBibleVerse.Service.Data
                         {
                             return false;
                         }
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw new Exception("An error occured inserting the bible verse.\nError number: " + ex.Number + "\nError: " + ex.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("An error occured inserting the bible verse.\nError: " + ex.Message);
+
+                    }
+                }
+            }
+        }
+
+        public BibleVerseModel GetVerse(BibleVerseModel verse)
+        {
+            CreateBibleVerseDB();
+            using (SqlConnection conn = new SqlConnection(bibleVerseConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(spAddVerse, conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Testament", verse.Testament);
+                    cmd.Parameters.AddWithValue("@Book", verse.BookSelection);
+                    cmd.Parameters.AddWithValue("@Chapter", verse.ChapterSelect);
+                    cmd.Parameters.AddWithValue("@VerseNumber", verse.VerseNumber);
+
+
+                    try
+                    {
+                        conn.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        conn.Close();
+
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            verse.VerseString = reader["Verse"].ToString();
+                        }
+                        return verse;
                     }
                     catch (SqlException ex)
                     {
@@ -179,6 +237,7 @@ namespace BenchmarkBibleVerse.Service.Data
             }
 
             CreateSPAddVerses();
+            CreateSPGetVerse();
         }
 
         public void CreateSPAddVerses()
@@ -205,5 +264,31 @@ namespace BenchmarkBibleVerse.Service.Data
                 }
             }
         }
+
+        public void CreateSPGetVerse()
+        {
+            using (SqlConnection conn = new SqlConnection(bibleVerseConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(createSPGetVerse, conn))
+                {
+                    try
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw new Exception("An error occured. Bible Verse Database is not available at this time.\nError number: " + ex.Number + "\nError: " + ex.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("An error occured. Bible Verse Database is not available at this time.\nError: " + ex.Message);
+
+                    }
+                }
+            }
+        }
+
     }
 }

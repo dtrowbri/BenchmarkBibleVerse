@@ -1,0 +1,75 @@
+﻿@model BenchmarkBibleVerse.Models.BibleVerseModel
+
+@{
+    ViewBag.Title = "SearchVerse";
+}
+
+<h2>SearchVerse</h2>
+
+<div>
+    <h4>BibleVerseModel</h4>
+    <hr />
+    @using (Html.BeginForm("GetVerse", "BibleVerseEntry", FormMethod.Get))
+    {
+        @Html.LabelFor(model => model.Testament, "Testament")
+        @Html.Label("Old")
+        @Html.RadioButtonFor(model => model.Testament, "Old")
+        @Html.Label("New")
+        @Html.RadioButtonFor(model => model.Testament, "New")
+
+        @Html.LabelFor(model => model.BookSelection, "Book")
+        @Html.TextBoxFor(model => model.BookSelection)
+
+        @Html.LabelFor(model => model.ChapterSelect, "Chapter")
+        @Html.TextBoxFor(model => model.ChapterSelect)
+
+        @Html.LabelFor(model => model.VerseNumber, "Verse #")
+        @Html.TextBoxFor(model => model.VerseNumber)
+
+        <input type="submit" value="Create" class="btn btn-default" />
+    }
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Testament)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Testament)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookSelection)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookSelection)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChapterSelect)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChapterSelect)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VerseNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VerseNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VerseString)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VerseString)
+        </dd>
+
+    </dl>
+</div>
+

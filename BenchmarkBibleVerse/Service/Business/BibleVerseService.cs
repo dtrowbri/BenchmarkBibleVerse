@@ -14,5 +14,11 @@ namespace BenchmarkBibleVerse.Service.Business
             BibleVerseDAO dao = new BibleVerseDAO();
             return dao.AddVerse(bibleVerse);
         }
+
+        public BibleVerseModel GetVerse(BibleVerseModel verse)
+        {
+            BibleVerseDAO dao = new BibleVerseDAO();
+            return dao.GetVerse(verse);
+        }
     }
 }
