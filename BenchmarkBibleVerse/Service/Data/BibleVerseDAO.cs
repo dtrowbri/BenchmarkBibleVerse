@@ -169,9 +169,9 @@ namespace BenchmarkBibleVerse.Service.Data
                             reader.Read();
                             verse.VerseString = reader["Verse"].ToString();
                         }
-                        return verse;
-
+                        
                         conn.Close();
+                        return verse;
                     }
                     catch (SqlException ex)
                     {

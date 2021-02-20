@@ -13,7 +13,7 @@
     {
         @Html.LabelFor(model => model.Testament, new { @class = "control-label col-md-2" })
         @Html.Label("Old")
-        @Html.RadioButtonFor(model => model.Testament)
+        @Html.RadioButtonFor(model => model.Testament, "Old")
         @Html.Label("New")
         @Html.RadioButtonFor(model => model.Testament, "New")
         <br />
