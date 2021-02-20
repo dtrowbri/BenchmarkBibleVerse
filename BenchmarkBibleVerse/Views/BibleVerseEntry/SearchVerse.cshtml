@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "SearchVerse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>SearchVerse</h2>
@@ -11,7 +12,7 @@
     <hr />
     @using (Html.BeginForm("GetVerse", "BibleVerseEntry", FormMethod.Get))
     {
-        @Html.LabelFor(model => model.Testament, "Testament")
+        @Html.DisplayNameFor(model => model.Testament)
         @Html.Label("Old")
         @Html.RadioButtonFor(model => model.Testament, "Old")
         @Html.Label("New")
@@ -29,47 +30,16 @@
         <input type="submit" value="Create" class="btn btn-default" />
     }
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Testament)
-        </dt>
+    @if (Model != null && Model.VerseString != null && Model.VerseString != "")
+    {
+        @Html.DisplayNameFor(model => model.VerseString)<p>:</p>
+        <br />
+        @Html.LabelFor(model => model.VerseString, Model.VerseString)
+    }
+    else if (Model != null && Model.BookSelection != null && Model.BookSelection != "" && (Model.VerseString == null || Model.VerseString == ""))
+    {
+        <label>No results found.</label>
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Testament)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BookSelection)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BookSelection)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ChapterSelect)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ChapterSelect)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.VerseNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.VerseNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.VerseString)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.VerseString)
-        </dd>
-
-    </dl>
 </div>
 

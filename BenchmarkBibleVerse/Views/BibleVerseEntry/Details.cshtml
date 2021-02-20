@@ -1,0 +1,58 @@
+﻿@model BenchmarkBibleVerse.Models.BibleVerseModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BibleVerseModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Testament)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Testament)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookSelection)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookSelection)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChapterSelect)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChapterSelect)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VerseNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VerseNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VerseString)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VerseString)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
