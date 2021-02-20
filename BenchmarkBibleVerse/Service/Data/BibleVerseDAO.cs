@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using BenchmarkBibleVerse.Models;
+using BenchmarkBibleVerse.Service.Utility;
 using System.Configuration;
+using System.Web.Script.Serialization;
 
 namespace BenchmarkBibleVerse.Service.Data
 {
@@ -98,6 +100,13 @@ namespace BenchmarkBibleVerse.Service.Data
         string bibleVerseConnectionString = ConfigurationManager.ConnectionStrings["BibleVerseDB"].ConnectionString;
         string masterConnectionString = ConfigurationManager.ConnectionStrings["Master"].ConnectionString;
 
+        private readonly ILogger logger;
+
+        public BibleVerseDAO(ILogger logger)
+        {
+            this.logger = logger;
+        }
+
         public string spAddVerse = "[DBO].[sp_addverse]";
 
         public string spGetVerse = "[DBO].[sp_getVerse]";
@@ -120,24 +129,30 @@ namespace BenchmarkBibleVerse.Service.Data
 
                     try
                     {
+                        logger.Info("Attempting to insert BibleVerse with paramters " + new JavaScriptSerializer().Serialize(bibleVerse) + " to the database.");
+
                         conn.Open();
                         cmd.ExecuteNonQuery();
                         conn.Close();
 
                         if(Convert.ToInt32(insertSucceeded.Value) == 1)
                         {
+                            logger.Info("Bible verse was successfully saved to the database.");
                             return true;
                         } else
                         {
+                            logger.Warning("Bible verse was successfully saved to the database.");
                             return false;
                         }
                     }
                     catch (SqlException ex)
                     {
+                        logger.Error("An error occured inserting the bible verse.\nError number: " + ex.Number + "\nError: " + ex.Message);
                         throw new Exception("An error occured inserting the bible verse.\nError number: " + ex.Number + "\nError: " + ex.Message);
                     }
                     catch (Exception ex)
                     {
+                        logger.Error("An error occured inserting the bible verse.\nError: " + ex.Message);
                         throw new Exception("An error occured inserting the bible verse.\nError: " + ex.Message);
 
                     }
@@ -161,6 +176,7 @@ namespace BenchmarkBibleVerse.Service.Data
 
                     try
                     {
+                        logger.Info("Attempting to retrieve verse " + new JavaScriptSerializer().Serialize(verse) + " from the database.");
                         conn.Open();
                         SqlDataReader reader = cmd.ExecuteReader();
                         
@@ -175,10 +191,12 @@ namespace BenchmarkBibleVerse.Service.Data
                     }
                     catch (SqlException ex)
                     {
+                        logger.Error("An error occured inserting the bible verse.\nError number: " + ex.Number + "\nError: " + ex.Message);
                         throw new Exception("An error occured inserting the bible verse.\nError number: " + ex.Number + "\nError: " + ex.Message);
                     }
                     catch (Exception ex)
                     {
+                        logger.Error("An error occured inserting the bible verse.\nError: " + ex.Message);
                         throw new Exception("An error occured inserting the bible verse.\nError: " + ex.Message);
 
                     }
@@ -200,12 +218,13 @@ namespace BenchmarkBibleVerse.Service.Data
                     }
                     catch (SqlException ex)
                     {
+                        logger.Error("An error occured during the 'creating database if not exists' check on the database.\nError number: " + ex.Number + "\nError: " + ex.Message);
                         throw new Exception("An error occured. Bible Verse Database is not available at this time.\nError number: " + ex.Number + "\nError: " + ex.Message);
                     }
                     catch (Exception ex)
                     {
+                        logger.Error("An error occured during the 'creating database if not exists' check on the database.\nError: " + ex.Message);
                         throw new Exception("An error occured. Bible Verse Database is not available at this time.\nError: " + ex.Message);
-
                     }
                 }
             }
@@ -227,10 +246,12 @@ namespace BenchmarkBibleVerse.Service.Data
                     }
                     catch (SqlException ex)
                     {
+                        logger.Error("An error occured during the 'creating Verses table if not exists' check on the database.\nError number: " + ex.Number + "\nError: " + ex.Message);
                         throw new Exception("An error occured. Bible Verse Database is not available at this time.\nError number: " + ex.Number + "\nError: " + ex.Message);
                     }
                     catch (Exception ex)
                     {
+                        logger.Error("An error occured during the 'creating Verses table if not exists' check on the database.\nError: " + ex.Message);
                         throw new Exception("An error occured. Bible Verse Database is not available at this time.\nError: " + ex.Message);
 
                     }
@@ -255,10 +276,12 @@ namespace BenchmarkBibleVerse.Service.Data
                     }
                     catch (SqlException ex)
                     {
+                        logger.Error("An error occured during the 'creating sp_AddVerses if not exists' check on the database.\nError number: " + ex.Number + "\nError: " + ex.Message);
                         throw new Exception("An error occured. Bible Verse Database is not available at this time.\nError number: " + ex.Number + "\nError: " + ex.Message);
                     }
                     catch (Exception ex)
                     {
+                        logger.Error("An error occured during the 'creating sp_AddVerses if not exists' check on the database.\nError: " + ex.Message);
                         throw new Exception("An error occured. Bible Verse Database is not available at this time.\nError: " + ex.Message);
 
                     }
@@ -280,10 +303,12 @@ namespace BenchmarkBibleVerse.Service.Data
                     }
                     catch (SqlException ex)
                     {
+                        logger.Error("An error occured during the 'creating sp_GetVerses if not exists' check on the database.\nError number: " + ex.Number + "\nError: " + ex.Message);
                         throw new Exception("An error occured. Bible Verse Database is not available at this time.\nError number: " + ex.Number + "\nError: " + ex.Message);
                     }
                     catch (Exception ex)
                     {
+                        logger.Error("An error occured during the 'creating sp_GetVerses if not exists' check on the database.\nError: " + ex.Message);
                         throw new Exception("An error occured. Bible Verse Database is not available at this time.\nError: " + ex.Message);
 
                     }

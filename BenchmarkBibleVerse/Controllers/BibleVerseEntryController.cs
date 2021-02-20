@@ -31,7 +31,7 @@ namespace BenchmarkBibleVerse.Controllers
             
             if(ModelState.IsValid){
                 logger.Info("Bible verse with parameters " + new JavaScriptSerializer().Serialize(verse) + " is being created. BibleVerseModel ModelState is valid.");
-                BibleVerseService service = new BibleVerseService();
+                BibleVerseService service = new BibleVerseService(logger);
                 try
                 {
                     service.AddVerse(verse);
@@ -62,7 +62,7 @@ namespace BenchmarkBibleVerse.Controllers
         public ActionResult GetVerse(BibleVerseModel verse)
         {
             logger.Info("Search request for verse " + new JavaScriptSerializer().Serialize(verse) + " executing.");
-            BibleVerseService service = new BibleVerseService();
+            BibleVerseService service = new BibleVerseService(logger);
             try
             {
                 verse = service.GetVerse(verse);
