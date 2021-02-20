@@ -108,7 +108,7 @@
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\BibleVerseEntry\CreateView.cshtml" />
+    <Content Include="Views\BibleVerseEntry\CreateVerse.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

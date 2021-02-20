@@ -13,7 +13,7 @@ namespace BenchmarkBibleVerse.Controllers
         // GET: BibleVerseEntry
         public ActionResult Index()
         {
-            return View("CreateView");
+            return View("CreateVerse");
         }
 
         public ActionResult CreateVerse(BibleVerseModel verse)
@@ -24,7 +24,7 @@ namespace BenchmarkBibleVerse.Controllers
                 ModelState.Clear();
             }
             
-            return View("CreateView");
+            return View("CreateVerse");
 
         }
     }
