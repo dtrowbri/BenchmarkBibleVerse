@@ -38,16 +38,10 @@ namespace BenchmarkBibleVerse.Controllers
         [HttpGet]
         public ActionResult GetVerse(BibleVerseModel verse)
         {
-            BibleVerseModel m = verse;
-            BibleVerseModel verse2 = new BibleVerseModel() {
-                Testament = "new",
-                ChapterSelect = 2,
-                BookSelection = "John",
-                VerseNumber = 78,
-                VerseString = "And I shall walk through the valley of death with no fear."
-            };
+            BibleVerseService service = new BibleVerseService();
+            verse = service.GetVerse(verse);
 
-            return View("SearchVerse", verse2);
+            return View("SearchVerse", verse);
             
         }
         

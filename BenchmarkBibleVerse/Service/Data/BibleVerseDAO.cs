@@ -150,7 +150,7 @@ namespace BenchmarkBibleVerse.Service.Data
             CreateBibleVerseDB();
             using (SqlConnection conn = new SqlConnection(bibleVerseConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand(spAddVerse, conn))
+                using (SqlCommand cmd = new SqlCommand(spGetVerse, conn))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Testament", verse.Testament);
@@ -163,14 +163,15 @@ namespace BenchmarkBibleVerse.Service.Data
                     {
                         conn.Open();
                         SqlDataReader reader = cmd.ExecuteReader();
-                        conn.Close();
-
+                        
                         if (reader.HasRows)
                         {
                             reader.Read();
                             verse.VerseString = reader["Verse"].ToString();
                         }
                         return verse;
+
+                        conn.Close();
                     }
                     catch (SqlException ex)
                     {
