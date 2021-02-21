@@ -40,6 +40,7 @@ namespace BenchmarkBibleVerse.Controllers
                 catch (Exception ex)
                 {
                     logger.Error("Exception has occured. Exception " + ex.Message);
+                    return View("CreateVerse", verse);
                 }
                 ModelState.Clear();
             } else

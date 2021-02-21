@@ -24,3 +24,21 @@
     margin-left: 20px;
     margin-top: 8px;
 }
+
+#logo {
+    width: 250px;
+    height: 150px;
+    margin-right: 35%;
+}
+
+.logoheadersh2{
+    color: white;
+    text-align: center;
+    font-size: 72px;
+}
+
+.logoheadersh4 {
+    color: white;
+    text-align: center;
+    font-size: 42px;
+}
