@@ -9,37 +9,61 @@
 
 <div class="formcenter">
     <h2 class="titlecenter">SearchVerse</h2>
-    <hr />
+    <br />
     @using (Html.BeginForm("GetVerse", "BibleVerseEntry", FormMethod.Get))
     {
+<div class="form-horizontal">
+    <div class="form-group">
         @Html.LabelFor(model => model.Testament, new { @class = "control-label col-md-2" })
-        @Html.Label("Old:")
-        @Html.RadioButtonFor(model => model.Testament, "Old")
-        @Html.Label("New:")
-        @Html.RadioButtonFor(model => model.Testament, "New")
-        <br />
+        <div class="col-md-10">
+            @Html.Label("Old:")
+            @Html.RadioButtonFor(model => model.Testament, "Old")
+            @Html.Label("New:", new { @class = "customradiolabels" })
+            @Html.RadioButtonFor(model => model.Testament, "New")
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.BookSelection, new { @class = "control-label col-md-2" })
-        @Html.TextBoxFor(model => model.BookSelection, new { @class = "form-control" })
-        <br />
+        <div class="col-mod-10">
+            @Html.TextBoxFor(model => model.BookSelection, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.ChapterSelect, new { @class = "control-label col-md-2" })
-        @Html.TextBoxFor(model => model.ChapterSelect, new { @class = "form-control" })
-        <br />
+        <div class="col-mod-10">
+            @Html.TextBoxFor(model => model.ChapterSelect, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.VerseNumber, new { @class = "control-label col-md-2" })
-        @Html.TextBoxFor(model => model.VerseNumber, new { @class = "form-control" })
-        <br />
-        <input type="submit" value="Search" class="btn btn-default" />
-    }
+        <div class="col-mod-10">
+            @Html.TextBoxFor(model => model.VerseNumber, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Search" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+@if (Model != null && Model.VerseString != null && Model.VerseString != "")
+{
     <hr />
-    @if (Model != null && Model.VerseString != null && Model.VerseString != "")
-    {
-        @Html.DisplayNameFor(model => model.VerseString)
-        <br />
-        @Html.LabelFor(model => model.VerseString, Model.VerseString, new { @class = "versecenter" })
-    }
-    else if (Model != null && Model.BookSelection != null && Model.BookSelection != "" && (Model.VerseString == null || Model.VerseString == ""))
-    {
-        <label>No results found.</label>
-    }
+    @Html.DisplayNameFor(model => model.VerseString)
+    <br />
+    @Html.LabelFor(model => model.VerseString, Model.VerseString, new { @class = "versecenter" })
+}
+else if (Model != null && Model.BookSelection != null && Model.BookSelection != "" && (Model.VerseString == null || Model.VerseString == ""))
+{
+    <hr />
+    <label>No results found.</label>
+}
 
 </div>
 

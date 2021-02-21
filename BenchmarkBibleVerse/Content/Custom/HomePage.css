@@ -19,3 +19,8 @@
 .versecenter {
     text-align: center;
 }
+
+.customradiolabels {
+    margin-left: 20px;
+    margin-top: 8px;
+}
