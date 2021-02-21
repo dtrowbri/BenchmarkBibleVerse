@@ -20,6 +20,7 @@
             @Html.RadioButtonFor(model => model.Testament, "Old")
             @Html.Label("New:", new { @class = "customradiolabels" })
             @Html.RadioButtonFor(model => model.Testament, "New")
+            @Html.ValidationMessageFor(model => model.Testament, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -27,6 +28,7 @@
         @Html.LabelFor(model => model.BookSelection, new { @class = "control-label col-md-2" })
         <div class="col-mod-10">
             @Html.TextBoxFor(model => model.BookSelection, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BookSelection, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -34,6 +36,7 @@
         @Html.LabelFor(model => model.ChapterSelect, new { @class = "control-label col-md-2" })
         <div class="col-mod-10">
             @Html.TextBoxFor(model => model.ChapterSelect, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ChapterSelect, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -41,6 +44,7 @@
         @Html.LabelFor(model => model.VerseNumber, new { @class = "control-label col-md-2" })
         <div class="col-mod-10">
             @Html.TextBoxFor(model => model.VerseNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.VerseNumber, "", new { @class = "text-danger" })
         </div>
     </div>
 
