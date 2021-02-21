@@ -9,6 +9,10 @@ namespace BenchmarkBibleVerse.Controllers
 {
     public class HomeController : Controller
     {
+
+        /*
+         * Creates logger and receives it using dependency injection
+         */
         private ILogger logger;
         
         public HomeController(ILogger logger)

@@ -10,6 +10,9 @@ namespace BenchmarkBibleVerse.Service.Business
 {
     public class BibleVerseService
     {
+        /*
+         * Gets logger from the view.
+         */
         private readonly ILogger logger;
         public BibleVerseService(ILogger logger)
         {

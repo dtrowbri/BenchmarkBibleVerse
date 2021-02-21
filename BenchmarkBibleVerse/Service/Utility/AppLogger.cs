@@ -10,6 +10,9 @@ namespace BenchmarkBibleVerse.Service.Utility
     {
         private Logger logger;
 
+        /*
+         * Creates logger in Singleton pattern
+         */
         private Logger GetLogger(string loggerName)
         {
             if (logger == null)

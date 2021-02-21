@@ -12,6 +12,9 @@ namespace BenchmarkBibleVerse.Controllers
 {
     public class BibleVerseEntryController : Controller
     {
+        /*
+         * Creates logger and receives it using dependency injection
+         */
         private readonly ILogger logger;
         public BibleVerseEntryController(ILogger logger)
         {
@@ -28,8 +31,14 @@ namespace BenchmarkBibleVerse.Controllers
         [HttpPost]
         public ActionResult CreateVerse(BibleVerseModel verse)
         {
-            
+            /*
+             * Checks if the model passed and returns validation errors if invalid
+             */
             if(ModelState.IsValid){
+                /*
+                 * Tries to write verse to database.
+                 * Clears model before returning view
+                 */
                 logger.Info("Bible verse with parameters " + new JavaScriptSerializer().Serialize(verse) + " is being created. BibleVerseModel ModelState is valid.");
                 BibleVerseService service = new BibleVerseService(logger);
                 try
@@ -40,7 +49,6 @@ namespace BenchmarkBibleVerse.Controllers
                 catch (Exception ex)
                 {
                     logger.Error("Exception has occured. Exception " + ex.Message);
-                    return View("CreateVerse", verse);
                 }
                 ModelState.Clear();
             } else
@@ -62,6 +70,9 @@ namespace BenchmarkBibleVerse.Controllers
         [HttpGet]
         public ActionResult GetVerse(BibleVerseModel verse)
         {
+            /*
+             * Tries to retrieve verse from database
+             */
             logger.Info("Search request for verse " + new JavaScriptSerializer().Serialize(verse) + " executing.");
             BibleVerseService service = new BibleVerseService(logger);
             try
@@ -72,6 +83,9 @@ namespace BenchmarkBibleVerse.Controllers
                 logger.Error("Exception occured searching for verse " + new JavaScriptSerializer().Serialize(verse) + "\nException: " + ex.Message);
             }
 
+            /*
+             * Creates different logs if the verse was successfully retrieved from the database
+             */
             if(verse.VerseString == null || verse.VerseString == "")
             {
                 logger.Warning("No verse was found for " + new JavaScriptSerializer().Serialize(verse));

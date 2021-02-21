@@ -12,6 +12,11 @@ namespace BenchmarkBibleVerse.Service.Data
 {
     public class BibleVerseDAO
     {
+
+        /*
+         * DDL scripts to check database objects.
+         * Recreates objects if missing.
+         */
         readonly string createBibleVerseDB = @"if not exists(select* from master.sys.sysdatabases where name = 'BibleVerse')
                                         Begin
                                             create database BibleVerse
@@ -97,9 +102,15 @@ namespace BenchmarkBibleVerse.Service.Data
 	                                                EXEC sp_sqlexec @SQLCMD
                                                 END";
 
+        /*
+         * Connection strings for the master and the BibleVerse database
+         */
         string bibleVerseConnectionString = ConfigurationManager.ConnectionStrings["BibleVerseDB"].ConnectionString;
         string masterConnectionString = ConfigurationManager.ConnectionStrings["Master"].ConnectionString;
 
+        /*
+         * Logger ojbect inserted using dependency injection
+         */
         private readonly ILogger logger;
 
         public BibleVerseDAO(ILogger logger)
@@ -107,17 +118,27 @@ namespace BenchmarkBibleVerse.Service.Data
             this.logger = logger;
         }
 
+        /*
+         * Stored procedures
+         */
         public string spAddVerse = "[DBO].[sp_addverse]";
 
         public string spGetVerse = "[DBO].[sp_getVerse]";
     
+        /*
+         *  Adds bible verse to the database
+         */
         public bool AddVerse(BibleVerseModel bibleVerse)
         {
+           
             CreateBibleVerseDB();
             using (SqlConnection conn = new SqlConnection(bibleVerseConnectionString))
             {
                 using(SqlCommand cmd = new SqlCommand(spAddVerse, conn))
                 {
+                    /*
+                     * Set SQL command paramters and the output parameter
+                     */
                     SqlParameter insertSucceeded = new SqlParameter("@InsertSucceed", System.Data.SqlDbType.Bit) { Direction = System.Data.ParameterDirection.Output };
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Testament", bibleVerse.Testament);
@@ -131,10 +152,14 @@ namespace BenchmarkBibleVerse.Service.Data
                     {
                         logger.Info("Attempting to insert BibleVerse with paramters " + new JavaScriptSerializer().Serialize(bibleVerse) + " to the database.");
 
+                        
                         conn.Open();
                         cmd.ExecuteNonQuery();
                         conn.Close();
 
+                        /*
+                         * Checks if the verse was added successfully.
+                         */
                         if(Convert.ToInt32(insertSucceeded.Value) == 1)
                         {
                             logger.Info("Bible verse was successfully saved to the database.");
@@ -160,6 +185,9 @@ namespace BenchmarkBibleVerse.Service.Data
             }
         }
 
+        /*
+         * Retrieves the verse the user is searching for from the database
+         */
         public BibleVerseModel GetVerse(BibleVerseModel verse)
         {
             CreateBibleVerseDB();
@@ -167,6 +195,9 @@ namespace BenchmarkBibleVerse.Service.Data
             {
                 using (SqlCommand cmd = new SqlCommand(spGetVerse, conn))
                 {
+                    /*
+                     * Set SQL Command parameters
+                     */
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Testament", verse.Testament);
                     cmd.Parameters.AddWithValue("@Book", verse.BookSelection);
@@ -178,6 +209,10 @@ namespace BenchmarkBibleVerse.Service.Data
                     {
                         logger.Info("Attempting to retrieve verse " + new JavaScriptSerializer().Serialize(verse) + " from the database.");
                         conn.Open();
+
+                        /*
+                         * Assigns the versstring attribute with the text returned from the database
+                         */
                         SqlDataReader reader = cmd.ExecuteReader();
                         
                         if (reader.HasRows)
@@ -204,6 +239,9 @@ namespace BenchmarkBibleVerse.Service.Data
             }
         }
 
+        /*
+         * Creates the BibleVerse database if it doesn't exist
+         */
         public void CreateBibleVerseDB()
         {
             using(SqlConnection conn = new SqlConnection(masterConnectionString))
@@ -232,6 +270,9 @@ namespace BenchmarkBibleVerse.Service.Data
             CreateVersesTable();
         }
 
+        /*
+         * Creates the verses table if it doesn't exist
+         */
         public void CreateVersesTable()
         {
             using (SqlConnection conn = new SqlConnection(bibleVerseConnectionString))
@@ -262,6 +303,9 @@ namespace BenchmarkBibleVerse.Service.Data
             CreateSPGetVerse();
         }
 
+        /*
+         * Creates the stored procedure sp_addverses if it doesn't exist
+         */
         public void CreateSPAddVerses()
         {
             using (SqlConnection conn = new SqlConnection(bibleVerseConnectionString))
@@ -289,6 +333,9 @@ namespace BenchmarkBibleVerse.Service.Data
             }
         }
 
+        /*
+         * Creates the stored procedure sp_getverse if it doesn't exist
+         */
         public void CreateSPGetVerse()
         {
             using (SqlConnection conn = new SqlConnection(bibleVerseConnectionString))
@@ -315,6 +362,5 @@ namespace BenchmarkBibleVerse.Service.Data
                 }
             }
         }
-
     }
 }
