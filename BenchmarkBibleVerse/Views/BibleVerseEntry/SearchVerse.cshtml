@@ -12,18 +12,18 @@
     @using (Html.BeginForm("GetVerse", "BibleVerseEntry", FormMethod.Get))
     {
         @Html.LabelFor(model => model.Testament, new { @class = "control-label col-md-2" })
-        @Html.Label("Old")
+        @Html.Label("Old:")
         @Html.RadioButtonFor(model => model.Testament, "Old")
-        @Html.Label("New")
+        @Html.Label("New:")
         @Html.RadioButtonFor(model => model.Testament, "New")
         <br />
-        @Html.LabelFor(model => model.BookSelection, "Book", new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.BookSelection, new { @class = "control-label col-md-2" })
         @Html.TextBoxFor(model => model.BookSelection, new { @class = "form-control" })
         <br />
-        @Html.LabelFor(model => model.ChapterSelect, "Chapter", new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.ChapterSelect, new { @class = "control-label col-md-2" })
         @Html.TextBoxFor(model => model.ChapterSelect, new { @class = "form-control" })
         <br />
-        @Html.LabelFor(model => model.VerseNumber, "Verse #", new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.VerseNumber, new { @class = "control-label col-md-2" })
         @Html.TextBoxFor(model => model.VerseNumber, new { @class = "form-control" })
         <br />
         <input type="submit" value="Search" class="btn btn-default" />
@@ -31,7 +31,7 @@
     <hr />
     @if (Model != null && Model.VerseString != null && Model.VerseString != "")
     {
-        @Html.DisplayNameFor(model => model.VerseString)<p>:</p>
+        @Html.DisplayNameFor(model => model.VerseString)
         <br />
         @Html.LabelFor(model => model.VerseString, Model.VerseString)
     }

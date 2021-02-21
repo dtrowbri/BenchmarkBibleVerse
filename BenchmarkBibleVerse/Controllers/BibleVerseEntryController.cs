@@ -55,7 +55,7 @@ namespace BenchmarkBibleVerse.Controllers
         public ActionResult SearchVerse()
         {
             logger.Info("Action SearchVerse from BibleVerseEntry controller has been invoked.");
-            return View("Action SearchVerse invoked from the BibleVerseEntry controller.");
+            return View("SearchVerse");
         }
 
         [HttpGet]
@@ -74,6 +74,9 @@ namespace BenchmarkBibleVerse.Controllers
             if(verse.VerseString == null || verse.VerseString == "")
             {
                 logger.Warning("No verse was found for " + new JavaScriptSerializer().Serialize(verse));
+            } else
+            {
+                logger.Info("Search request completed successfully.");
             }
             return View("SearchVerse", verse);
             

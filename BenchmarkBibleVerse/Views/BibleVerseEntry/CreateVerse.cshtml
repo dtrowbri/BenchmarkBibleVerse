@@ -16,8 +16,8 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Testament, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.Label("Old")@Html.RadioButtonFor(model => model.Testament, "Old")
-            @Html.Label("New")@Html.RadioButtonFor(model => model.Testament, "New")
+            @Html.Label("Old:")@Html.RadioButtonFor(model => model.Testament, "Old")
+            @Html.Label("New:")@Html.RadioButtonFor(model => model.Testament, "New")
         </div>
 
         <div class="form-group">
