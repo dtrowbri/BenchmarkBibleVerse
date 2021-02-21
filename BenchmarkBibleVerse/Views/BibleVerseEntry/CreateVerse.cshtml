@@ -6,7 +6,7 @@
 }
 
 <div class="formcenter">
-<h2 class="titlecenter">CreateVerse</h2>
+<h2 class="titlecenter">Create Verse</h2>
 <br />
 
 @using (Html.BeginForm("CreateVerse", "BibleVerseEntry", FormMethod.Post))
@@ -21,6 +21,7 @@
             @Html.RadioButtonFor(model => model.Testament, "Old")
             @Html.Label("New:", new { @class = "customradiolabels" })
             @Html.RadioButtonFor(model => model.Testament, "New")
+            @Html.ValidationMessageFor(model => model.Testament, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
