@@ -1,4 +1,21 @@
-﻿.homebody {
-    background: url("/Images/bible.jpg") no-repeat center center fixed;
+﻿body {
+    background-image: url("/Images/bible.jpg");
     background-size: cover;
+}
+.homefooter {
+    color: white;
+}
+
+.formcenter {
+    background: white;
+    margin-top: 15%;
+    padding: 10px;
+}
+
+.titlecenter {
+    text-align: center;
+}
+
+.versecenter {
+    text-align: center;
 }

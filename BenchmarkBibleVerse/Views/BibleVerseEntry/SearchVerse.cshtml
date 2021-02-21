@@ -2,12 +2,13 @@
 
 @{
     ViewBag.Title = "SearchVerse";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
 
-<h2>SearchVerse</h2>
 
-<div>
+
+<div class="formcenter">
+    <h2 class="titlecenter">SearchVerse</h2>
     <hr />
     @using (Html.BeginForm("GetVerse", "BibleVerseEntry", FormMethod.Get))
     {
@@ -33,7 +34,7 @@
     {
         @Html.DisplayNameFor(model => model.VerseString)
         <br />
-        @Html.LabelFor(model => model.VerseString, Model.VerseString)
+        @Html.LabelFor(model => model.VerseString, Model.VerseString, new { @class = "versecenter" })
     }
     else if (Model != null && Model.BookSelection != null && Model.BookSelection != "" && (Model.VerseString == null || Model.VerseString == ""))
     {
